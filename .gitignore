@@ -6,6 +6,7 @@ bin/
 .vs/
 publish/
 Properties/
+packages/
 .editorconfig
 *.import
 *.uid
