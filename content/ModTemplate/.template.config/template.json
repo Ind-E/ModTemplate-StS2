@@ -11,10 +11,10 @@
     "sourceName": "ModTemplate",
     "sources": [
         {
-            "modifiers":[
+            "modifiers": [
                 {
                     "condition": true,
-                    "exclude":[
+                    "exclude": [
                         ".git/**",
                         ".godot/**",
                         ".idea/**",
@@ -26,23 +26,23 @@
         }
     ],
     "symbols": {
-        "ModAuthor":{
+        "ModAuthor": {
             "type": "parameter",
             "dataType": "string",
             "isRequired": "true",
             "replaces": "{ModAuthor}",
             "defaultValue": "Author"
         },
-        "PublicizeSts":{
+        "PublicizeSts": {
             "type": "parameter",
-            "dataType":"bool",
+            "dataType": "bool",
             "defaultValue": "false",
             "replaces": "{PublicizeSts}",
             "description": "If enabled, non-virtual private and protected symbols in the Slay the Spire 2 .dll will be publicized."
         },
-        "NullableChecks":{
+        "NullableChecks": {
             "type": "parameter",
-            "dataType":"choice",
+            "dataType": "choice",
             "choices": [
                 {
                     "choice": "enable",
@@ -56,5 +56,15 @@
             "replaces": "{NullableChecks}",
             "defaultValue": "enable"
         }
-    }
+    },
+    "postActions": [
+        {
+            "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+            "args": {
+                "executable": "jj",
+                "args": "git init"
+            },
+            "continueOnError": true
+        }
+    ]
 }
