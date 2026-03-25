@@ -13,6 +13,13 @@ config_version=5
 config/name="ModTemplate"
 config/features=PackedStringArray("4.5", "C#", "Mobile")
 
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/initial_position_type=3
+
 [dotnet]
 
 project/assembly_name="ModTemplate"
@@ -20,3 +27,4 @@ project/assembly_name="ModTemplate"
 [rendering]
 
 renderer/rendering_method="mobile"
+environment/defaults/default_clear_color=Color(0.09411765, 0.12156863, 0.11764706, 1)
