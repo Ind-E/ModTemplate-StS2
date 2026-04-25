@@ -1,6 +1,8 @@
 ﻿<Project Sdk="Godot.NET.Sdk/4.5.1" InitialTargets="CheckDependencyPaths">
     <Import Project=".\Sts2PathDiscovery.props"/>
     <PropertyGroup>
+        <Version>0.0.0</Version>
+
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>true</ImplicitUsings>
         <Nullable>{NullableChecks}</Nullable> <!--Makes code analysis regarding null values stricter.-->
@@ -63,6 +65,28 @@
         <Error
                 Text=" Slay the Spire 2 data not found at path '$(Sts2DataDir)'"
                 Condition="'$(Sts2DataDir)' == '' or !Exists('$(Sts2DataDir)')" />
+    </Target>
+
+    <Target Name="UpdateManifestVersion" BeforeTargets="BeforeBuild">
+        <PropertyGroup>
+            <ManifestPath>$(MSBuildProjectName).json</ManifestPath>
+        </PropertyGroup>
+
+        <PropertyGroup>
+            <OldContent>$([System.IO.File]::ReadAllText($(ManifestPath)))</OldContent>
+            <NewContent>$([System.Text.RegularExpressions.Regex]::Replace($(OldContent), '("version":\s*")[^"]*', '$1v$(Version)'))</NewContent>
+        </PropertyGroup>
+
+        <WriteLinesToFile
+                Condition="'$(OldContent)' != '$(NewContent)'"
+                File="$(ManifestPath)"
+                Lines="$(NewContent)"
+                Overwrite="true"
+                Encoding="UTF-8" />
+
+        <Message Condition="'$(OldContent)' != '$(NewContent)'"
+                 Text="Updated $(MSBuildProjectName).json to version $(Version)"
+                 Importance="high" />
     </Target>
 
     <Target Name="CopyToModsFolderOnBuild" AfterTargets="PostBuildEvent">
