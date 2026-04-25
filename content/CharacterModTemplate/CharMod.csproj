@@ -119,4 +119,27 @@
               EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1"
               ContinueOnError="WarnAndContinue"/>
     </Target>
+
+    <Target Name="ZipRelease" AfterTargets="GodotPublish">
+        <PropertyGroup>
+            <StagingDir>$(TargetDir)Zip/</StagingDir>
+            <ZipFileName>$(TargetDir)$(MSBuildProjectName)_v$(Version).zip</ZipFileName>
+        </PropertyGroup>
+
+        <RemoveDir Directories="$(StagingDir)" />
+        <Delete Files="$(ZipFileName)" />
+
+        <MakeDir Directories="$(StagingDir)" />
+
+        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(StagingDir)" />
+        <Copy SourceFiles="$(MSBuildProjectName).json" DestinationFolder="$(StagingDir)" />
+        <Copy SourceFiles="$(ModsPath)$(MSBuildProjectName)/$(MSBuildProjectName).pck" DestinationFolder="$(StagingDir)" />
+
+        <ZipDirectory SourceDirectory="$(StagingDir)" DestinationFile="$(ZipFileName)" Overwrite="true" />
+
+        <RemoveDir Directories="$(StagingDir)" />
+
+        <Message Text="Created zip file $(ZipFileName)" Importance="high" />
+    </Target>
 </Project>
+
