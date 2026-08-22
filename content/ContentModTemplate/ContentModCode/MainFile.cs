@@ -1,9 +1,11 @@
+using System.Reflection;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Modding;
 
 namespace ContentMod.ContentModCode;
 
+//You're recommended but not required to keep all your code in this package and all your assets in the ContentMod folder.
 [ModInitializer(nameof(Initialize))]
 public partial class MainFile : Node
 {
@@ -14,11 +16,13 @@ public partial class MainFile : Node
 
     public static void Initialize()
     {
+        var assembly = Assembly.GetExecutingAssembly();
+
         //If you want to use scripts defined in your mod for Godot scenes, uncomment the following line.
-        //Godot.Bridge.ScriptManagerBridge.LookupScriptsInAssembly(Assembly.GetExecutingAssembly());
-        
+        //Godot.Bridge.ScriptManagerBridge.LookupScriptsInAssembly(assembly);
+     
         Harmony harmony = new(ModId);
 
-        harmony.PatchAll();
+        harmony.PatchAll(assembly);
     }
 }
